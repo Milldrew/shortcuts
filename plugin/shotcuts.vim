@@ -1,0 +1,2 @@
+command! Hello :echo 'hello'
+
