@@ -1,33 +1,5 @@
 "check if an env variable exists
 "
-let s:alphabet = [
-      \ 'A'
-      \ 'B'
-      \ 'C'
-      \ 'D'
-      \ 'E'
-      \ 'F'
-      \ 'G'
-      \ 'H'
-      \ 'I'
-      \ 'J'
-      \ 'K'
-      \ 'L'
-      \ 'M'
-      \ 'N'
-      \ 'O'
-      \ 'P'
-      \ 'Q'
-      \ 'R'
-      \ 'S'
-      \ 'T'
-      \ 'U'
-      \ 'V'
-      \ 'W'
-      \ 'X'
-      \ 'Y'
-      \ 'Z'
-      \ ]
 let s:allPaths = [
       \ $A,
       \ $B,
@@ -56,6 +28,7 @@ let s:allPaths = [
       \ $Y,
       \ $Z,
       \ ]
+let alphabet = ['A','B',"C","D",'E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 let setPaths = []
 for path in s:allPaths
@@ -123,5 +96,5 @@ function! CreateCommands(dirPath) abort
 echom s:commandNames  
 endfunction
 
-call CreateCommands('/Users/lauchschool/shortcuts/plugin')
+call CreateCommands(path)
 endfor
