@@ -45,7 +45,7 @@ function! CreateCommands(dirPath, prefix) abort
       endif
       let s:commandNames[l:commandName] = 1
 
-      call GetDir(l:dirPathCommand)
+      call CreateCommands(l:dirPathCommand, a:prefix)
     endfor
   endif
 echom s:commandNames  
