@@ -31,8 +31,8 @@ let s:allPaths = [
 
 let setPaths = []
 for path in s:allPaths
-
-  if (path !=# "NULL")
+echo path
+  if (path !=# "")
     call add(setPaths, path)
   endif
 endfor
