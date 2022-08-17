@@ -1,32 +1,32 @@
 "check if an env variable exists
 "
 let s:alphabet = [
-      \ 'A'
-      \ 'B'
-      \ 'C'
-      \ 'D'
-      \ 'E'
-      \ 'F'
-      \ 'G'
-      \ 'H'
-      \ 'I'
-      \ 'J'
-      \ 'K'
-      \ 'L'
-      \ 'M'
-      \ 'N'
-      \ 'O'
-      \ 'P'
-      \ 'Q'
-      \ 'R'
-      \ 'S'
-      \ 'T'
-      \ 'U'
-      \ 'V'
-      \ 'W'
-      \ 'X'
-      \ 'Y'
-      \ 'Z'
+      \ 'A',
+      \ 'B',
+      \ 'C',
+      \ 'D',
+      \ 'E',
+      \ 'F',
+      \ 'G',
+      \ 'H',
+      \ 'I',
+      \ 'J',
+      \ 'K',
+      \ 'L',
+      \ 'M',
+      \ 'N',
+      \ 'O',
+      \ 'P',
+      \ 'Q',
+      \ 'R',
+      \ 'S',
+      \ 'T',
+      \ 'U',
+      \ 'V',
+      \ 'W',
+      \ 'X',
+      \ 'Y',
+      \ 'Z',
       \ ]
 let s:allPaths = [
       \ $A,
@@ -57,12 +57,14 @@ let s:allPaths = [
       \ $Z,
       \ ]
 
+let s:count = 0
 let setPaths = []
 for path in s:allPaths
 echo path
   if (path !=# "")
-    call add(setPaths, path)
+    call add([setPaths,s:count], path)
   endif
+  let s:count += 1
 endfor
 echo setPaths
 
