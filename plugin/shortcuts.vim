@@ -118,14 +118,12 @@ for path in s:allPaths
   endif
   let s:count += 1
 endfor
-echo s:setPaths
 
 for path in s:setPaths
   let s:conflict_count = 0
   let s:commandNames = {}
-  echo path
 
-  call CreateCommands(path[0], path[1])
+  silent call CreateCommands(path[0], path[1])
   exec 'command! '.path[1].'root :e '.path[0]
   echo path[1].'root'
 endfor
