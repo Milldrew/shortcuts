@@ -23,7 +23,7 @@ function! CreateCommands(dirPath, prefix) abort
           break
         endif
       endfor
-      let l:commandName= 'A' . l:suffix
+      let l:commandName= a:prefix . l:suffix
       let l:commandName= substitute(l:commandName,'-','d','g')
       let isNameConflict =  has_key(s:commandNames, l:commandName)
 
