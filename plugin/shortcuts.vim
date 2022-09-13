@@ -25,6 +25,8 @@ function! CreateCommands(dirPath, prefix) abort
       endfor
       let l:commandName= a:prefix . l:suffix
       let l:commandName= substitute(l:commandName,'-','d','g')
+      let l:commandName= substitute(l:commandName,'\.','d','g')
+      let l:commandName= substitute(l:commandName,'@','d','g')
       let isNameConflict =  has_key(s:commandNames, l:commandName)
 
       echo s:commandNames
@@ -127,3 +129,4 @@ for path in s:setPaths
   exec 'command! '.path[1].'root :e '.path[0]
   echo path[1].'root'
 endfor
+command! ShortCommands echo s:commandNames;
