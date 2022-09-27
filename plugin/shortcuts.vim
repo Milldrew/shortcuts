@@ -127,3 +127,38 @@ for path in s:setPaths
   exec 'command! '.path[1].'root :e '.path[0]
   echo path[1].'root'
 endfor
+
+
+
+
+"Recurses backwards from teh current rootdir
+"Find the dir that has the package.json
+function! GetProjectRoot() abort
+  const l:CWD = getcwd()
+"  if 1 ==# CheckForPackageJson(l:CWD)
+"    return l:CWD
+"  endif
+  let l:allDirOnPath = split(CWD, '/')
+  echo l:allDirOnPath
+  while !empty(l:allDirOnPath)
+    let l:currentDir = '/' . join(l:allDirOnPath,'/')
+    echo l:currentDir
+    echo CheckForPackageJson(l:currentDir)
+    echo remove(l:allDirOnPath, -1)
+  endwhile
+  echo 'No package.json found'
+endfunction
+"Checks if the directory has a package.json file and returns 1 for true 0 for
+"false
+function! CheckForPackageJson(directory) abort
+  echo a:directory
+const l:PACKAGE_JSON = "package.json"
+  let l:files = readdir(a:directory)
+  for file in l:files
+    if file ==# s:PACKAGE_JSON
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
