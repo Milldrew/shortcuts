@@ -143,7 +143,8 @@ function! GetProjectRoot() abort
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
       if 1 ==# CheckForPackageJson(l:currentDir)
-
+          call CreateCommands(l:currentDir, 'S') 
+        return
       endif
     call  remove(l:allDirOnPath, -1)
   endwhile
@@ -163,3 +164,4 @@ const l:PACKAGE_JSON = "package.json"
   return 0
 endfunction
 
+call GetProjectRoot()
