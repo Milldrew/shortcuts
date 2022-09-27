@@ -135,19 +135,19 @@ endfor
 "Find the dir that has the package.json
 function! GetProjectRoot() abort
   const l:CWD = getcwd()
-"  if 1 ==# CheckForPackageJson(l:CWD)
-"    return l:CWD
-"  endif
+  if 1 ==# CheckForPackageJson(l:CWD)
+    return l:CWD
+  endif
   let l:allDirOnPath = split(CWD, '/')
   echo l:allDirOnPath
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
     echo l:currentDir
     echo CheckForPackageJson(l:currentDir)
-    echo remove(l:allDirOnPath, -1)
+    call  remove(l:allDirOnPath, -1)
   endwhile
-  echo 'No package.json found'
 endfunction
+
 "Checks if the directory has a package.json file and returns 1 for true 0 for
 "false
 function! CheckForPackageJson(directory) abort
