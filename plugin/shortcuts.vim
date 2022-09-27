@@ -142,8 +142,9 @@ function! GetProjectRoot() abort
   echo l:allDirOnPath
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
-    echo l:currentDir
-    echo CheckForPackageJson(l:currentDir)
+      if 1 ==# CheckForPackageJson(l:currentDir)
+
+      endif
     call  remove(l:allDirOnPath, -1)
   endwhile
 endfunction
