@@ -139,12 +139,11 @@ function! GetProjectRoot() abort
     return l:CWD
   endif
   let l:allDirOnPath = split(CWD, '/')
-  echo l:allDirOnPath
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
       if 1 ==# CheckForPackageJson(l:currentDir)
-        echo l:currentDir . ' DIR GETTING PROCESSED'
-          call CreateCommands(l:currentDir . '/src',  'S') 
+          silent call CreateCommands(l:currentDir . '/src',  'S') 
+          exec 'command! Sroot :e ' . l:currentDir . '/src'
         return
       endif
     call  remove(l:allDirOnPath, -1)
@@ -154,7 +153,6 @@ endfunction
 "Checks if the directory has a package.json file and returns 1 for true 0 for
 "false
 function! CheckForPackageJson(directory) abort
-  echo a:directory
 const l:SRC = "src"
   let l:files = readdir(a:directory)
   for file in l:files
