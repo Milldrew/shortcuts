@@ -145,8 +145,10 @@ function! GetProjectRoot() abort
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
       if 1 ==# CheckForPackageJson(l:currentDir)
          let l:currentDir .= '/src'
-         silent call CreateCommands(l:currentDir . '/src',  'S') 
-         exec 'command! Sroot :e ' . l:currentDir . '/src'
+         silent call CreateCommands(l:currentDir,  'S') 
+         exec 'command! Sroot :e ' . l:currentDir
+         echo l:currentDir
+         exec 'nnoremap <leader>G :call GrepCword(' ."'". l:currentDir. "')"
          return
       endif
     call  remove(l:allDirOnPath, -1)
@@ -166,9 +168,9 @@ const l:SRC = "src"
   return 0
 endfunction
 
-function GrepCword(grepRootDir)
+function! GrepCword(grepRootDir)
   const l:wordUnderCursor =  expand('<cword>')
-  exec ':vimgrep '  . l:wordUnderCursor .' ' . a:grepRootDir
+  exec ':vimgrep '  . l:wordUnderCursor .' ' . a:grepRootDir .'/**'
   :copen  
   exec "normal \<c-w> L"
 endfunction
