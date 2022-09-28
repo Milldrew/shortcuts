@@ -144,9 +144,10 @@ function! GetProjectRoot() abort
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
       if 1 ==# CheckForPackageJson(l:currentDir)
-          silent call CreateCommands(l:currentDir . '/src',  'S') 
-          exec 'command! Sroot :e ' . l:currentDir . '/src'
-        return
+         let l:currentDir .= '/src'
+         silent call CreateCommands(l:currentDir . '/src',  'S') 
+         exec 'command! Sroot :e ' . l:currentDir . '/src'
+         return
       endif
     call  remove(l:allDirOnPath, -1)
   endwhile
