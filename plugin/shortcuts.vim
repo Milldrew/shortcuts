@@ -25,6 +25,7 @@ function! CreateCommands(dirPath, prefix) abort
       endfor
       let l:commandName= a:prefix . l:suffix
       let l:commandName= substitute(l:commandName,'-','d','g')
+      let l:commandName= substitute(l:commandName,'\.','d','g')
       let isNameConflict =  has_key(s:commandNames, l:commandName)
 
       echo s:commandNames
@@ -119,9 +120,9 @@ for path in s:allPaths
   let s:count += 1
 endfor
 
+let s:commandNames = {}
 for path in s:setPaths
   let s:conflict_count = 0
-  let s:commandNames = {}
 
   silent call CreateCommands(path[0], path[1])
   exec 'command! '.path[1].'root :e '.path[0]
@@ -143,7 +144,8 @@ function! GetProjectRoot() abort
   while !empty(l:allDirOnPath)
     let l:currentDir = '/' . join(l:allDirOnPath,'/')
       if 1 ==# CheckForPackageJson(l:currentDir)
-          call CreateCommands(l:currentDir, 'S') 
+        echo l:currentDir . ' DIR GETTING PROCESSED'
+          call CreateCommands(l:currentDir . '/src',  'S') 
         return
       endif
     call  remove(l:allDirOnPath, -1)
@@ -154,10 +156,10 @@ endfunction
 "false
 function! CheckForPackageJson(directory) abort
   echo a:directory
-const l:PACKAGE_JSON = "package.json"
+const l:SRC = "src"
   let l:files = readdir(a:directory)
   for file in l:files
-    if file ==# s:PACKAGE_JSON
+    if file ==# l:SRC
       return 1
     endif
   endfor
