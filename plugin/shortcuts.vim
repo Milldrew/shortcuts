@@ -114,7 +114,6 @@ let s:count = 0
 let s:setPaths = []
 for path in s:allPaths
   if (path !=# "")
-
     call add(s:setPaths, [path, s:alphabet[s:count]])
   endif
   let s:count += 1
