@@ -115,18 +115,60 @@ let s:count = 0
 let s:setPaths = []
 for path in s:allPaths
   if (path !=# "")
-
     call add(s:setPaths, [path, s:alphabet[s:count]])
   endif
   let s:count += 1
 endfor
 
+let s:commandNames = {}
+let s:conflict_count = 0
 for path in s:setPaths
-  let s:conflict_count = 0
-  let s:commandNames = {}
 
   silent call CreateCommands(path[0], path[1])
   exec 'command! '.path[1].'root :e '.path[0]
   echo path[1].'root'
 endfor
 command! ShortCommands echo s:commandNames;
+
+
+
+
+"Recurses backwards from teh current rootdir
+"Find the dir that has the package.json
+function! GetProjectRoot() abort
+  const l:CWD = getcwd()
+  if 1 ==# CheckForPackageJson(l:CWD)
+    return l:CWD
+  endif
+  let l:allDirOnPath = split(CWD, '/')
+  while !empty(l:allDirOnPath)
+    let l:currentDir = '/' . join(l:allDirOnPath,'/')
+      if 1 ==# CheckForPackageJson(l:currentDir)
+          silent call CreateCommands(l:currentDir . '/src',  'S') 
+          exec 'command! Sroot :e ' . l:currentDir . '/src'
+        return
+      endif
+    call  remove(l:allDirOnPath, -1)
+  endwhile
+endfunction
+
+"Checks if the directory has a package.json file and returns 1 for true 0 for
+"false
+function! CheckForPackageJson(directory) abort
+const l:SRC = "src"
+  let l:files = readdir(a:directory)
+  for file in l:files
+    if file ==# l:SRC
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
+function GrepCword(grepRootDir)
+  const l:wordUnderCursor =  expand('<cword>')
+  exec ':vimgrep '  . l:wordUnderCursor .' ' . a:grepRootDir
+  :copen  
+  exec "normal \<c-w> L"
+endfunction
+call GetProjectRoot()
