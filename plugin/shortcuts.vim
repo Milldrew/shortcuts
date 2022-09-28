@@ -148,7 +148,7 @@ function! GetProjectRoot() abort
          silent call CreateCommands(l:currentDir,  'S') 
          exec 'command! Sroot :e ' . l:currentDir
          echo l:currentDir
-         exec 'nnoremap <leader>G :call GrepCword(' ."'". l:currentDir. "')"
+         exec 'nnoremap <leader>G :call GrepCword(' ."'". l:currentDir. "')\<cr>"
          return
       endif
     call  remove(l:allDirOnPath, -1)
