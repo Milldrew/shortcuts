@@ -120,8 +120,8 @@ for path in s:allPaths
 endfor
 
 let s:commandNames = {}
+let s:conflict_count = 0
 for path in s:setPaths
-  let s:conflict_count = 0
 
   silent call CreateCommands(path[0], path[1])
   exec 'command! '.path[1].'root :e '.path[0]
