@@ -128,7 +128,6 @@ for path in s:setPaths
   exec 'command! '.path[1].'root :e '.path[0]
   echo path[1].'root'
 endfor
-command! ShortCommands echo s:commandNames;
 
 
 
@@ -175,3 +174,14 @@ function! GrepCword(grepRootDir)
   exec "normal \<c-w> L"
 endfunction
 call GetProjectRoot()
+let s:formattedCommands = s:commandNames
+
+function! FormatCommands(formattedCommands) abort 
+  let l:formattedCommands = sort(keys(a:formattedCommands))
+  for command in l:formattedCommands
+    echo command
+  endfor
+  return l:formattedCommands
+endfunction
+command! ShortCommands echo FormatCommands(s:formattedCommands)
+
