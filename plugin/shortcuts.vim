@@ -36,10 +36,11 @@ function! CreateCommands(dirPath, prefix) abort
         echo 'hi'
       echo l:dirPathCommand
       echo l:commandName
+      let s:conflict_count[l:commandName] = 0
         exec 'command! '.l:commandName.' :e '.l:dirPathCommand
       else
-        let s:conflict_count += 1
-        let l:command_suffix = string(s:conflict_count)
+        let s:conflict_count[l:commandName] += 1
+        let l:command_suffix = string(s:conflict_count[l:commandName])
         let l:commandName= l:commandName.l:command_suffix
       echo l:dirPathCommand
       echo l:commandName
@@ -120,8 +121,9 @@ for path in s:allPaths
   let s:count += 1
 endfor
 
+
 let s:commandNames = {}
-let s:conflict_count = 0
+let s:conflict_count = {}
 for path in s:setPaths
 
   silent call CreateCommands(path[0], path[1])
@@ -181,7 +183,7 @@ function! FormatCommands(formattedCommands) abort
   for command in l:formattedCommands
     echo command
   endfor
+  echo len(l:formattedCommands)
   return l:formattedCommands
 endfunction
 command! ShortCommands echo FormatCommands(s:formattedCommands)
-
